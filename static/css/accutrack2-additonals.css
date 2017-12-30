@@ -1,0 +1,229 @@
+.arc-landing-page--1 .welcome {
+  position: relative;
+  height: 100vh;
+}
+
+.arc-landing-page--1 .welcome:before {
+  position: absolute;
+  z-index: 0;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.8;
+  background: #007bff; /* Old browsers */
+  background: -moz-linear-gradient(
+    -45deg,
+    #007bff 0%,
+    #b923ff 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    -45deg,
+    #007bff 0%,
+    #b923ff 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    135deg,
+    #007bff 0%,
+    #b923ff 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(
+      startColorstr='#007bff',
+      endColorstr='#b923ff',
+      GradientType=1
+    ); /* IE6-9 fallback on horizontal gradient */
+}
+
+@media (max-width: 767px) {
+  .arc-landing-page--1 .welcome .inner-wrapper {
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .arc-landing-page--1 .welcome .welcome-heading {
+    font-size: 2.415rem;
+  }
+}
+
+.arc-landing-page--1 .section-title {
+  position: relative;
+}
+
+.arc-landing-page--1 .section-title:after {
+  content: '';
+  width: 30px;
+  height: 2px;
+  background: #007bff;
+  position: absolute;
+  left: 50%;
+  margin-left: -15px;
+  bottom: -20px;
+}
+
+.arc-landing-page--1 .feature .icon {
+  border-radius: 50%;
+  min-width: 65px;
+  height: 65px;
+  line-height: 65px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(33, 37, 41, 0.1), 0 7px 14px rgba(33, 37, 41, 0.1);
+  font-size: 27px;
+}
+
+.arc-landing-page--1 .section {
+  border-bottom: 1px solid #eaebed;
+}
+
+.arc-landing-page--1 .section-invert {
+  background: #f9fafc;
+}
+
+.arc-landing-page--1 .testimonials .avatar {
+  max-width: 80px;
+  overflow: hidden;
+}
+
+.arc-app-promo-page--1 .welcome {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  background: url('../images/app-promo/welcome-cover.jpg') no-repeat center
+    center fixed;
+  background-size: cover;
+}
+
+.arc-app-promo-page--1 .welcome:before {
+  position: absolute;
+  z-index: 0;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.9;
+  background: #212529;
+}
+
+@media (max-width: 991px) {
+  .arc-app-promo-page--1 .welcome {
+    height: auto;
+  }
+  .arc-app-promo-page--1 .welcome .header-social-icons {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .arc-app-promo-page--1 .welcome {
+    height: auto;
+  }
+  .arc-app-promo-page--1 .welcome .inner-wrapper {
+    padding-top: 4.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .arc-app-promo-page--1 .welcome .welcome-heading {
+    font-size: 2.415rem;
+  }
+}
+
+.arc-app-promo-page--1 .welcome .iphone-mockup {
+  max-width: 85%;
+}
+
+.arc-app-promo-page--1 .section-title {
+  position: relative;
+}
+
+.arc-app-promo-page--1 .section-title:after {
+  content: '';
+  width: 30px;
+  height: 2px;
+  background: #17c671;
+  position: absolute;
+  left: 50%;
+  margin-left: -15px;
+  bottom: -20px;
+}
+
+.arc-app-promo-page--1 .section-title.underline--left:after {
+  left: 0;
+  margin-left: 0;
+}
+
+.arc-app-promo-page--1 .app-screenshot {
+  background: url('../images/app-promo/features-background.jpg') no-repeat
+    center center fixed;
+  background-size: cover;
+}
+
+.arc-app-promo-page--1 .app-screenshot:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #e9ecef;
+  opacity: 0.6;
+}
+
+.arc-app-promo-page--1 .app-screenshot img {
+  max-width: 300px;
+  position: relative;
+  z-index: 1;
+  top: 50%;
+  left: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 13px 25px rgba(0, 0, 0, 0.05),
+    0 60px 100px rgba(192, 192, 192, 0.5);
+}
+
+@media (max-width: 991px) {
+  .arc-app-promo-page--1 .app-screenshot img {
+    left: 50%;
+    -webkit-transform: translateX(-50%, 0);
+    transform: translateX(-50%, 0);
+  }
+}
+
+.arc-app-promo-page--1 .feature .icon {
+  border-radius: 50%;
+  min-width: 65px;
+  height: 65px;
+  line-height: 65px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(33, 37, 41, 0.1), 0 7px 14px rgba(33, 37, 41, 0.1);
+  font-size: 27px;
+}
+
+@media (max-width: 767px) {
+  .arc-app-promo-page--1 .feature .icon {
+    margin-right: 1.5rem !important;
+  }
+}
+
+.arc-app-promo-page--1 .section {
+  border-bottom: 1px solid #eaebed;
+}
+
+.arc-app-promo-page--1 .section-invert {
+  background: #f9fafc;
+}
+
+.arc-app-promo-page--1 .testimonials .avatar {
+  max-width: 80px;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .arc-app-promo-page--1 .subscribe input,
+  .arc-app-promo-page--1 .subscribe button {
+    width: 100%;
+  }
+}

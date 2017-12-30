@@ -1,28 +1,21 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark pt-4 px-0">
-    <a class="navbar-brand mr-5" href="#">
+    <router-link class="navbar-brand mr-5" to="/">
       AccuTrack 2
-    </a>
+    </router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Our Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Testimonials</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-      </ul>
-
       <ul class="header-social-icons navbar-nav ml-auto">
+        <router-link
+          tag="li"
+          activeClass="active"
+          to="/instructor"
+          class="nav-item"
+        >
+          <a class="nav-link">Instructor Sign In</a>
+        </router-link>
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/JohnPhamous/accutrack2" target="_blank"><i class="fa fa-github"></i></a>
         </li>

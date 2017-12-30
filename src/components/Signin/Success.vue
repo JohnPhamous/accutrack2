@@ -14,6 +14,7 @@
 <script>
 import Card from '../Card'
 import axios from 'axios'
+import { giphy } from '../../../secrets/giphy.js'
 
 export default {
     components: {
@@ -25,11 +26,8 @@ export default {
         }
     },
     created() {
-        console.log('hello')
         axios
-            .get(
-                'http://api.giphy.com/v1/gifs/random?api_key=GjxOcnAtGNLQ2xjDDQDA71Ia0DD9IcYS&tag=dog'
-            )
+            .get(`http://api.giphy.com/v1/gifs/random?api_key=${giphy}&tag=dog`)
             .then(response => {
                 this.gifSrc = response.data.data.image_url
             })

@@ -10,6 +10,7 @@
         v-model="classCode"
       >
       <button class="btn btn-primary btn-pill btn-lg d-flex ml-auto mr-auto mt-5" @click="signIn">R'Web Sign In</button>
+      {{ db }}
     </div>
   </arc-card>
 </template>

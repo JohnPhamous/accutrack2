@@ -6,6 +6,7 @@ import Success from '../components/Signin/Success'
 import Error from '../components/Signin/Error'
 import InstructorSignIn from '../components/InstructorSignIn'
 import ViewClasses from '../components/class/ViewClasses'
+import ClassView from '../components/class/Class'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/classes',
       name: 'View Classes',
       component: ViewClasses
+    },
+    {
+      path: '/classes/:id',
+      name: 'Class View',
+      component: ClassView
     }
   ],
   mode: 'history'

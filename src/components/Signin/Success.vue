@@ -1,12 +1,15 @@
 <template>
-  <arc-card>
-    <h1>Success!</h1>
-    <div class="card-block">
-      <div class="gif-container">
-        <img :src="gifSrc" class="gif mb-3">
-      </div>
-      <p class="card-text">You've <strong><span style="color: green;">successfully</span></strong> signed into the class.</p>
-      <router-link to="/" class="btn btn-primary">Home</router-link>
+  <arc-card class="text-center" type="success">
+    <h1 slot="header" class="fa fa-check-circle"></h1>
+
+    <div class="mb-5 mt-5">
+        <div class="card-block">
+        <div class="gif-container mb-3">
+            <img :src="gifSrc" class="gif">
+        </div>
+        <p class="card-text">You've <strong><span style="color: green;">successfully</span></strong> signed into the class.</p>
+        <router-link to="/" class="btn btn-primary">Home</router-link>
+        </div>
     </div>
   </arc-card>
 </template>
@@ -44,9 +47,10 @@ export default {
     height: 40vh;
     overflow: hidden;
     background-color: #e5e5e5;
+    margin: auto;
+    display: block;
 }
 .gif {
-    margin: auto;
     width: 105%;
     height: 105%;
 }

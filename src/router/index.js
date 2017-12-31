@@ -5,6 +5,7 @@ import Home from '../components/Home'
 import Success from '../components/Signin/Success'
 import Error from '../components/Signin/Error'
 import InstructorSignIn from '../components/InstructorSignIn'
+import ViewClasses from '../components/class/ViewClasses'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/instructor',
       name: 'Instructor Sign In',
       component: InstructorSignIn
+    },
+    {
+      path: '/classes',
+      name: 'View Classes',
+      component: ViewClasses
     }
   ],
   mode: 'history'

@@ -1,7 +1,7 @@
 <template>
   <div class="arc-landing-page--1">
     <div class="welcome d-flex justify-content-center flex-column">
-      <div class="container">
+      <div class="container navbar-container">
         <arc-navbar/>
       </div>
       <transition name="slide" mode="out-in">
@@ -18,7 +18,7 @@ import Footer from './components/Footer'
 
 import 'font-awesome/css/font-awesome.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'jquery'
+// import 'jquery'
 
 export default {
     components: {
@@ -29,6 +29,14 @@ export default {
 </script>
 
 <style>
+.navbar-container {
+    position: absolute;
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
 .slide-enter-active {
     animation: slide-in 200ms ease-out forwards;
 }

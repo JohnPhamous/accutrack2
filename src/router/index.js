@@ -7,6 +7,7 @@ import Error from '../components/Signin/Error'
 import InstructorSignIn from '../components/InstructorSignIn'
 import ViewClasses from '../components/class/ViewClasses'
 import ClassView from '../components/class/Class'
+import CreateClass from '../components/class/CreateClass'
 
 Vue.use(Router)
 
@@ -38,9 +39,14 @@ export default new Router({
       component: ViewClasses
     },
     {
-      path: '/classes/:id',
+      path: '/classes/view/:id',
       name: 'Class View',
       component: ClassView
+    },
+    {
+      path: '/classes/create',
+      name: 'Create Class',
+      component: CreateClass
     }
   ],
   mode: 'history'

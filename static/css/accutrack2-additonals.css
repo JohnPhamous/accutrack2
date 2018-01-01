@@ -227,3 +227,19 @@
     width: 100%;
   }
 }
+
+.table th {
+  padding: 15px 25px;
+  font-size: 11px;
+  font-weight: 300;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #9ba4ae;
+  border: none;
+}
+.table-striped tbody tr:nth-of-type(2n + 1) {
+  background-color: #f7f8fb;
+}
+mark {
+  background-color: #93ebff;
+}

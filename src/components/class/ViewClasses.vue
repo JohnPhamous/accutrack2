@@ -1,8 +1,13 @@
 <template>
   <arc-card type="success">
     <div slot="header" class="text-center">
+      <router-link tag="button" class="btn btn-light btn-pill float-left" to="/classes/create">
+          <span class="fa fa-plus-circle"></span>
+          Create Class
+      </router-link>
       <h1>View Classes</h1>
     </div>
+
     <div class="card-block px-2">
       <table class="table table-hover table-striped">
         <thead>
@@ -11,18 +16,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="c in classes"
-            :key="c.classId" 
-            class="course-item"
-            @click="$router.push(`/classes/${c.classId}`)"
-          >
-            <td>{{ c.courseName }}</td>
-            <td>{{ c.instructor }}</td>
-            <td>{{ c.location }}</td>
-            <td>{{ c.date }}</td>
-            <td>{{ c.time }}</td>
-            <td>{{ c.signins }}</td>
-          </tr>
+            <router-link 
+                :to="`/classes/view/${c.classId}`" 
+                tag="tr" 
+                v-for="c in classes"
+                :key="c.classId" 
+                class="course-item"
+            >
+                <td>{{ c.courseName }}</td>
+                <td>{{ c.instructor }}</td>
+                <td>{{ c.location }}</td>
+                <td>{{ c.date }}</td>
+                <td>{{ c.time }}</td>
+                <td>{{ c.signins }}</td>
+                <td><h5><span class="badge badge-pill badge-primary"><strong>{{ c.code }}</strong></span></h5></td>
+            </router-link>
         </tbody>
       </table>
     </div>
@@ -41,7 +49,8 @@ export default {
                 'Location',
                 'Date',
                 'Time',
-                'Sign Ins'
+                'Sign Ins',
+                'Course Code'
             ],
             classes: [
                 {
@@ -51,198 +60,20 @@ export default {
                     location: 'Chung 127',
                     time: '12PM - 1PM',
                     date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
-                },
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34
+                    signins: 34,
+                    code: '529329'
                 }
             ]
         }
     },
     components: {
         arcCard: Card
-    }
+    },
+    methods: {}
 }
 </script>
 
-<style>
+<style scoped>
 .course-item {
     cursor: pointer;
 }
@@ -250,16 +81,7 @@ export default {
     height: 70vh;
     overflow: auto;
 }
-.table th {
-    padding: 15px 25px;
-    font-size: 11px;
-    font-weight: 300;
-    text-transform: uppercase;
-    line-height: 1;
-    color: #9ba4ae;
-    border: none;
-}
-.table-striped tbody tr:nth-of-type(2n + 1) {
-    background-color: #f7f8fb;
+mark {
+    background-color: #93ebff;
 }
 </style>

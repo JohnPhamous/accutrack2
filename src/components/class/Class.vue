@@ -75,9 +75,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="student in 15" :key="student.name">
-                    <td>{{ student }}</td>
-                    <td>{{ student }}</td>
+                  <tr v-for="student in course.attendance" :key="student.email">
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.email }}</td>
                   </tr>
                 </tbody>
             </table>
@@ -97,31 +97,15 @@ export default {
         arcCard: Card,
         arcData: IconText
     },
+    computed: {
+        course() {
+            return this.$store.state.courses.find(i => {
+                return i.id == this.$route.params.id
+            })
+        }
+    },
     data: function() {
         return {
-            course: {
-                courseName: 'CS10',
-                section: '14',
-                code: '532133',
-                instructor: {
-                    name: 'John Pham',
-                    email: 'jpham035@ucr.edu'
-                },
-                location: 'Chung 127',
-                time: '12PM - 1PM',
-                date: '01/12/18',
-                attendance: [
-                    {
-                        name: 'John Doe',
-                        email: 'jdoe001@ucr.edu'
-                    },
-                    {
-                        name: 'John Doe',
-                        email: 'jdoe001@ucr.edu'
-                    }
-                ],
-                notes: 'This is some notes'
-            },
             downloadDisabled: false
         }
     },

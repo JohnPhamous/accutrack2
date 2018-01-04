@@ -17,18 +17,18 @@
         </thead>
         <tbody>
             <router-link 
-                :to="`/classes/view/${c.classId}`" 
+                :to="`/classes/view/${c.id}`" 
                 tag="tr" 
                 v-for="c in classes"
                 :key="c.classId" 
                 class="course-item"
             >
                 <td>{{ c.courseName }}</td>
-                <td>{{ c.instructor }}</td>
+                <td>{{ c.instructor.name }}</td>
                 <td>{{ c.location }}</td>
                 <td>{{ c.date }}</td>
-                <td>{{ c.time }}</td>
-                <td>{{ c.signins }}</td>
+                <td>{{ c.startTime }} - {{ c.endTime }}</td>
+                <td>{{ c.attendance.length }}</td>
                 <td><h5><span class="badge badge-pill badge-primary"><strong>{{ c.code }}</strong></span></h5></td>
             </router-link>
         </tbody>
@@ -51,19 +51,12 @@ export default {
                 'Time',
                 'Sign Ins',
                 'Course Code'
-            ],
-            classes: [
-                {
-                    classId: 0,
-                    courseName: 'CS10',
-                    instructor: 'John Pham',
-                    location: 'Chung 127',
-                    time: '12PM - 1PM',
-                    date: '01/03/2018',
-                    signins: 34,
-                    code: '529329'
-                }
             ]
+        }
+    },
+    computed: {
+        classes() {
+            return this.$store.state.courses
         }
     },
     components: {

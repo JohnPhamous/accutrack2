@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -8,8 +9,10 @@ export const store = new Vuex.Store({
     user: {
       name: '',
       email: '',
-      role: ''
+      photoURL: '',
+      instructor: undefined
     },
+    accessCode: 'SIRocks',
     registrationCode: '',
     courses: [
       {
@@ -60,8 +63,50 @@ export const store = new Vuex.Store({
       }
     ]
   },
-  getters: {},
-  mutations: {},
-  actions: {},
+  getters: {
+    getUser(state) {
+      return state.user
+    }
+  },
+  mutations: {
+    createClass(state, newClass) {
+      state.courses.push(newClass)
+    },
+    setUser({ commit }, payload) {
+      console.log('set user')
+    }
+  },
+  actions: {
+    userSignIn({ commit }) {
+      let provider = new firebase.auth.GoogleAuthProvider()
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          const token = result.credential.accessToken
+          const user = result.user
+
+          this.state.user.name = user.displayName
+          this.state.user.email = user.email
+          this.state.user.photoURL = user.photoURL
+          this.state.user.instructor = false
+        })
+    },
+    instructorSignIn({ commit }) {
+      let provider = new firebase.auth.GoogleAuthProvider()
+
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(result => {
+          const user = result.user
+
+          this.state.user.name = user.displayName
+          this.state.user.email = user.email
+          this.state.user.photoURL = user.photoURL
+          this.state.user.instructor = true
+        })
+    }
+  },
   modules: {}
 })

@@ -11,8 +11,18 @@
         <router-link
           tag="li"
           activeClass="active"
+          to="/classes"
+          class="nav-item"
+          v-if="showSignIn"
+        >
+          <a class="nav-link">View Classes</a>
+        </router-link>
+        <router-link
+          tag="li"
+          activeClass="active"
           to="/instructor"
           class="nav-item"
+          v-if="!showSignIn"
         >
           <a class="nav-link">Instructor Sign In</a>
         </router-link>
@@ -25,7 +35,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+    computed: {
+        showSignIn() {
+            return this.$store.state.user.email.includes('@ucr.edu')
+        }
+    }
+}
 </script>
 
 <style scoped>

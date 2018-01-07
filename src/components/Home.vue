@@ -25,7 +25,25 @@ export default {
     },
     methods: {
         signIn() {
-            this.$router.push('/success')
+            this.$store.dispatch('userSignIn')
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.getters.getUser
+        },
+        userEmail() {
+            return this.$store.state.user.email
+        }
+    },
+    watch: {
+        userEmail(value) {
+            if (value.includes('@ucr.edu')) {
+                this.$router.push('/success')
+            } else {
+                alert('Please use your @ucr.edu email when signing in')
+                this.$router.go('/')
+            }
         }
     },
     components: {

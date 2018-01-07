@@ -142,7 +142,7 @@
                 </div>
 
                 <div class="actions-container mt-3">
-                  <input class="btn btn-secondary btn-pill btn-confirm" type="submit" value="Create Course" @click="confirmInformation">
+                  <input class="btn btn-secondary btn-pill btn-confirm" type="submit" value="Create Course" @click.prevent="confirmInformation">
                   <button tag="button" class="btn btn-danger btn-pill btn-confirm" to="/classes" @click="cancelCreate">Cancel</button>
                 </div>
               </form>
@@ -165,7 +165,7 @@
     >
       <div class="actions-container">
         <button class="btn btn-warning btn-pill btn-confirm" @click="confirmingClass = false">Go Back</button>
-        <button class="btn btn-primary btn-pill btn-confirm">Confirm Class</button>
+        <button class="btn btn-primary btn-pill btn-confirm" @click="createClass">Confirm Class</button>
       </div>
     </confirm-class>
   </div>
@@ -189,6 +189,75 @@ export default {
             if (cancel) {
                 this.$router.push('/classes')
             }
+        },
+        createClass() {
+            let newDate = ''
+            newDate += this.date.substr(5, 2) + '/'
+            newDate += this.date.substr(8, 2) + '/'
+            newDate += this.date.substr(0, 4)
+
+            let newID = this.createHashID()
+
+            let newCode = this.createCode()
+
+            const newClass = {
+                courseName: this.courseName,
+                id: newID,
+                section: this.section,
+                code: newCode,
+                instructor: {
+                    name: this.instructorName,
+                    email: this.instructorEmail
+                },
+                location: this.location,
+                startTime: this.startTime,
+                endTime: this.endTime,
+                date: newDate,
+                attendance: [],
+                notes: this.notes
+            }
+
+            this.$store.commit('createClass', newClass)
+
+            alert('Class has been created')
+            this.$router.push('/classes')
+        },
+        createHashID() {
+            let key =
+                this.courseName +
+                this.section +
+                this.instructorName +
+                this.instructorEmail +
+                this.location
+
+            let hash = 0
+            for (let i = 0; i < key.length; i++) {
+                hash += key.charCodeAt(i)
+            }
+            return hash
+        },
+        createCode() {
+            // Creates a 6 digit number
+
+            let code =
+                this.courseName +
+                this.section +
+                this.instructorName +
+                this.instructorEmail +
+                this.location +
+                this.notes
+
+            let numericalCode = 0
+
+            for (let i = 0; i < code.length; i++) {
+                numericalCode += code.charCodeAt(i)
+            }
+
+            while (numericalCode < 100000) {
+                numericalCode *= 2
+            }
+
+            return numericalCode % 1000000
         }
     },
     data: function() {

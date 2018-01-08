@@ -41,9 +41,16 @@ export default {
             this.$store.dispatch('userSignIn')
         },
         checkIn() {
-            console.log('dispatch class checkin')
-            this.$store.dispatch('studentCheckIn', this.classCode)
-            this.$router.push('/success')
+            this.$store
+                .dispatch('studentCheckIn', this.classCode)
+                .then(response => {
+                    console.log(response)
+                    if (response) {
+                        this.$router.push('/success')
+                    } else {
+                        this.$router.push('/error')
+                    }
+                })
         }
     },
     computed: {

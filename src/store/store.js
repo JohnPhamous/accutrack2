@@ -133,28 +133,32 @@ export const store = new Vuex.Store({
         })
     },
     studentCheckIn({ commit }, classCode) {
-      console.log('Checking in student with code: ', classCode)
+      return new Promise((resolve, reject) => {
+        let newStudent = {
+          name: store.state.user.name,
+          email: store.state.user.email
+        }
 
-      let newStudent = {
-        name: store.state.user.name,
-        email: store.state.user.email
-      }
+        let courseRef = ''
 
-      let courseRef = ''
+        store.state.courses.some(el => {
+          if (el.code == classCode) {
+            courseRef = el.id
+            return true
+          }
+        })
 
-      store.state.courses.some(el => {
-        if (el.code == classCode) {
-          courseRef = el.id
-          return true
+        if (courseRef.length > 5) {
+          firebase
+            .database()
+            .ref(`courses/${courseRef}/attendance`)
+            .push(newStudent)
+
+          resolve(true)
+        } else {
+          resolve(false)
         }
       })
-
-      firebase
-        .database()
-        .ref(`courses/${courseRef}/attendance`)
-        .push(newStudent)
-      console.log(courseRef)
-      // console.log('student obj: ', newStudent)
     }
   },
   modules: {}

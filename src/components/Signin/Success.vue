@@ -30,7 +30,9 @@ export default {
     },
     created() {
         axios
-            .get(`http://api.giphy.com/v1/gifs/random?api_key=${giphy}&tag=dog`)
+            .get(
+                `https://api.giphy.com/v1/gifs/random?api_key=${giphy}&tag=dog`
+            )
             .then(response => {
                 this.gifSrc = response.data.data.image_url
             })

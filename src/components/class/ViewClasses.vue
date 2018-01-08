@@ -32,7 +32,7 @@
                 <td>{{ c.location }}</td>
                 <td>{{ c.date }}</td>
                 <td>{{ c.startTime }} - {{ c.endTime }}</td>
-                <td>{{ c.attendance.length }}</td>
+                <td>{{ Object.keys(c.attendance).length - 1 }}</td>
                 <td><h5><span class="badge badge-pill badge-primary"><strong>{{ c.code }}</strong></span></h5></td>
             </router-link>
         </tbody>

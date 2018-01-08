@@ -69,6 +69,7 @@ export default {
     },
     beforeCreate() {
         this.$store.dispatch('getAuth', { instructor: false })
+        this.$store.dispatch('loadClasses')
     },
     components: {
         arcCard: Card

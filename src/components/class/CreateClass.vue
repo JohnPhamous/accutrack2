@@ -218,7 +218,7 @@ export default {
                 startTime: this.startTime,
                 endTime: this.endTime,
                 date: newDate,
-                attendance: [],
+                attendance: [{ name: '', email: '' }],
                 notes: this.notes
             }
 

@@ -135,9 +135,26 @@ export const store = new Vuex.Store({
     studentCheckIn({ commit }, classCode) {
       console.log('Checking in student with code: ', classCode)
 
-      // write to firebase
+      let newStudent = {
+        name: store.state.user.name,
+        email: store.state.user.email
+      }
 
-      console.log('student obj: ', newStudent)
+      let courseRef = ''
+
+      store.state.courses.some(el => {
+        if (el.code == classCode) {
+          courseRef = el.id
+          return true
+        }
+      })
+
+      firebase
+        .database()
+        .ref(`courses/${courseRef}/attendance`)
+        .push(newStudent)
+      console.log(courseRef)
+      // console.log('student obj: ', newStudent)
     }
   },
   modules: {}

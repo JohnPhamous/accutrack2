@@ -34,7 +34,7 @@
                     <li><strong>Location:</strong> {{ course.location }}</li>
                     <li><strong>Time:</strong> {{ course.startTime }} - {{ course.endTime }}</li>
                     <li><strong>Date:</strong> {{ course.date }}</li>
-                    <li><strong>Number of Students:</strong> {{ course.attendance.length }}</li>
+                    <li><strong>Number of Students:</strong> {{ Object.keys(course.attendance).length - 2 }}</li>
                     <li><strong>Course Code:</strong> <span class="badge badge-pill badge-primary">{{ course.code }}</span></li>
                     <li><strong>Notes:</strong> {{ course.notes }}</li>
                   </ul>
@@ -75,7 +75,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="student in course.attendance" :key="student.email">
+                  <tr v-for="student in course.attendance" :key="student.email" v-if="student.name.length > 0">
                     <td>{{ student.name }}</td>
                     <td>{{ student.email }}</td>
                   </tr>

@@ -22,7 +22,7 @@
                         type="text"
                         class="form-control"
                         placeholder="Instructor's Name"
-                        v-model="instructorName"
+                        v-model="user.name"
                         disabled
                         id="name"
                       >
@@ -35,7 +35,7 @@
                         type="email"
                         class="form-control"
                         placeholder="Instructor's Email"
-                        v-model="instructorEmail"
+                        v-model="user.email"
                         disabled
                         id="email"
                       >
@@ -154,8 +154,8 @@
     </arc-card>
     <confirm-class
       v-if="confirmingClass"
-      :name="instructorName"
-      :email="instructorEmail"
+      :name="user.name"
+      :email="user.email"
       :courseName="courseName"
       :section="section"
       :location="location"
@@ -179,6 +179,11 @@ export default {
     components: {
         arcCard: Card,
         confirmClass: Confirm
+    },
+    computed: {
+        user() {
+            return this.$store.getters.getUser
+        }
     },
     methods: {
         confirmInformation() {
@@ -206,8 +211,8 @@ export default {
                 section: this.section,
                 code: newCode,
                 instructor: {
-                    name: this.instructorName,
-                    email: this.instructorEmail
+                    name: this.user.name,
+                    email: this.user.email
                 },
                 location: this.location,
                 startTime: this.startTime,
@@ -217,7 +222,7 @@ export default {
                 notes: this.notes
             }
 
-            this.$store.commit('createClass', newClass)
+            this.$store.dispatch('createClassFirebase', newClass)
 
             alert('Class has been created')
             this.$router.push('/classes')
@@ -226,8 +231,8 @@ export default {
             let key =
                 this.courseName +
                 this.section +
-                this.instructorName +
-                this.instructorEmail +
+                this.user.name +
+                this.user.email +
                 this.location
 
             let hash = 0
@@ -242,8 +247,8 @@ export default {
             let code =
                 this.courseName +
                 this.section +
-                this.instructorName +
-                this.instructorEmail +
+                this.user.name +
+                this.user.email +
                 this.location +
                 this.notes
 
@@ -262,8 +267,8 @@ export default {
     },
     data: function() {
         return {
-            instructorName: 'John Pham',
-            instructorEmail: 'jpham035@ucr.edu',
+            // instructorName: 'John Pham',
+            // instructorEmail: 'jpham035@ucr.edu',
             courseName: '',
             section: '',
             location: '',

@@ -9,7 +9,11 @@
     </div>
 
     <div class="card-block px-2">
-      <table class="table table-hover table-striped">
+        <div class="text-center">
+            <h1 v-if="$store.state.courses.length === 0" class="loading text-center">Loading</h1>
+        </div>
+        
+      <table class="table table-hover table-striped" v-if="$store.state.courses.length > 0">
         <thead>
           <tr>
             <th v-for="header in headers" :key="header">{{ header }}</th>
@@ -59,6 +63,9 @@ export default {
             return this.$store.state.courses
         }
     },
+    beforeCreate() {
+        this.$store.dispatch('loadClasses')
+    },
     components: {
         arcCard: Card
     },
@@ -76,5 +83,9 @@ export default {
 }
 mark {
     background-color: #93ebff;
+}
+.loading {
+    position: relative;
+    margin-top: 30vh;
 }
 </style>

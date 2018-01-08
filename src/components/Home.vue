@@ -1,15 +1,28 @@
 <template>
   <arc-card class="text-center" type="primary">
     <h1 slot="header">AccuTrack 2</h1>
-
     <div class="mb-5 mt-5">
-      <input 
-        type="number"
-        class="form-control input-lg m-auto"
-        placeholder="Code"
-        v-model="classCode"
-      >
-      <button class="btn btn-primary btn-pill btn-lg d-flex ml-auto mr-auto mt-5" @click="signIn">R'Web Sign In</button>
+        <input 
+            type="number"
+            class="form-control input-lg m-auto"
+            placeholder="Code"
+            v-model="classCode"
+            v-if="isSignedIn"
+        />
+
+        <button 
+            class="btn btn-primary btn-pill btn-lg d-flex ml-auto mr-auto"
+            :class="{ isSignedIn : 'mt-5'}"
+            @click="signIn"
+            v-if="!isSignedIn"
+        >R'Web Sign In</button>
+
+        <button
+            class="btn btn-primary btn-lg d-flex ml-auto mr-auto mt-5"
+            @click="checkIn"
+            v-if="isSignedIn"
+        >Sign Into Class</button>
+
     </div>
   </arc-card>
 </template>
@@ -26,6 +39,10 @@ export default {
     methods: {
         signIn() {
             this.$store.dispatch('userSignIn')
+        },
+        checkIn() {
+            console.log('dispatch class checkin')
+            this.$router.push('/success')
         }
     },
     computed: {
@@ -34,17 +51,23 @@ export default {
         },
         userEmail() {
             return this.$store.state.user.email
+        },
+        isSignedIn() {
+            return this.$store.state.user.email.includes('@ucr.edu')
         }
     },
     watch: {
         userEmail(value) {
             if (value.includes('@ucr.edu')) {
-                this.$router.push('/success')
+                // this.isSignedIn = true
             } else {
                 alert('Please use your @ucr.edu email when signing in')
-                this.$router.go('/')
+                this.$router.push('/')
             }
         }
+    },
+    beforeCreate() {
+        this.$store.dispatch('getAuth', { instructor: false })
     },
     components: {
         arcCard: Card

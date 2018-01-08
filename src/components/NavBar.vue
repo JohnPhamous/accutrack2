@@ -13,7 +13,7 @@
           activeClass="active"
           to="/classes"
           class="nav-item"
-          v-if="showSignIn"
+          v-if="isInstructor"
         >
           <a class="nav-link">View Classes</a>
         </router-link>
@@ -39,6 +39,9 @@ export default {
     computed: {
         showSignIn() {
             return this.$store.state.user.email.includes('@ucr.edu')
+        },
+        isInstructor() {
+            return this.$store.state.user.instructor
         }
     }
 }

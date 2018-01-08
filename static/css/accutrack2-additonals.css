@@ -243,3 +243,6 @@
 mark {
   background-color: #93ebff;
 }
+.btn {
+  border-radius: 2rem !important;
+}

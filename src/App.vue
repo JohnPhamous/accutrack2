@@ -65,10 +65,6 @@ export default {
     }
 }
 
-.btn {
-    border-radius: 2rem;
-}
-
 .btn-primary {
     background: linear-gradient(120deg, #36d1dc, #5b86e5);
     border: none;

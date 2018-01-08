@@ -32,7 +32,7 @@
                 <span slot="body">
                   <ul style="list-style: none; padding-left: 0;">
                     <li><strong>Location:</strong> {{ course.location }}</li>
-                    <li><strong>Time:</strong> {{ course.time }}</li>
+                    <li><strong>Time:</strong> {{ course.startTime }} - {{ course.endTime }}</li>
                     <li><strong>Date:</strong> {{ course.date }}</li>
                     <li><strong>Number of Students:</strong> {{ course.attendance.length }}</li>
                     <li><strong>Course Code:</strong> <span class="badge badge-pill badge-primary">{{ course.code }}</span></li>

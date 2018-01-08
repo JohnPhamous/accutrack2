@@ -48,7 +48,7 @@ export default {
                 this.$router.push('/classes')
             } else {
                 alert('Please use your @ucr.edu email when signing in')
-                this.$router.go('/instructor')
+                this.$router.push('/instructor')
             }
         }
     },
@@ -56,6 +56,9 @@ export default {
         logIn() {
             this.$store.dispatch('instructorSignIn')
         }
+    },
+    beforeCreate() {
+        this.$store.dispatch('getAuth', { instructor: true })
     }
 }
 </script>

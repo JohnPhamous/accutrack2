@@ -10,58 +10,12 @@ export const store = new Vuex.Store({
       name: '',
       email: '',
       photoURL: '',
-      instructor: undefined
+      instructor: undefined,
+      token: ''
     },
     accessCode: 'SIRocks',
     registrationCode: '',
-    courses: [
-      {
-        courseName: 'CS10',
-        id: '0',
-        section: '21',
-        code: '329329',
-        instructor: {
-          name: 'John Pham',
-          email: 'jpham035@ucr.edu'
-        },
-        location: 'Chung 127',
-        startTime: '12PM',
-        endTime: '1PM',
-        date: '01/03/2018',
-        attendance: [
-          {
-            name: 'John Doe',
-            email: 'jdoe001@ucr.edu'
-          },
-          {
-            name: 'Alice Tomson',
-            email: 'atom001@ucr.edu'
-          }
-        ],
-        notes: 'lorem ipsum'
-      },
-      {
-        courseName: 'CS10',
-        id: '2',
-        section: '84',
-        code: '123456',
-        instructor: {
-          name: 'Guthrie Price',
-          email: 'gprice@ucr.edu'
-        },
-        location: 'Chung 127',
-        startTime: '12PM',
-        endTime: '1PM',
-        date: '01/03/2018',
-        attendance: [
-          {
-            name: 'John Doe',
-            email: 'jdoe001@ucr.edu'
-          }
-        ],
-        notes: 'Test Notes'
-      }
-    ]
+    courses: []
   },
   getters: {
     getUser(state) {
@@ -74,37 +28,87 @@ export const store = new Vuex.Store({
     },
     setUser({ commit }, payload) {
       console.log('set user')
+    },
+    setLoadedCourses(state, courses) {
+      console.log(courses)
+      state.courses = courses
     }
   },
   actions: {
     userSignIn({ commit }) {
       let provider = new firebase.auth.GoogleAuthProvider()
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(result => {
-          const token = result.credential.accessToken
-          const user = result.user
-
-          this.state.user.name = user.displayName
-          this.state.user.email = user.email
-          this.state.user.photoURL = user.photoURL
-          this.state.user.instructor = false
-        })
+      this.state.user.instructor = false
+      firebase.auth().signInWithRedirect(provider)
     },
     instructorSignIn({ commit }) {
       let provider = new firebase.auth.GoogleAuthProvider()
-
+      this.state.user.instructor = true
+      firebase.auth().signInWithRedirect(provider)
+    },
+    getAuth({ commit }, payload) {
       firebase
         .auth()
-        .signInWithPopup(provider)
+        .getRedirectResult()
         .then(result => {
-          const user = result.user
+          if (result.credential) {
+            const token = result.credential.accessToken
+            const user = result.user
 
-          this.state.user.name = user.displayName
-          this.state.user.email = user.email
-          this.state.user.photoURL = user.photoURL
-          this.state.user.instructor = true
+            this.state.user.name = user.displayName
+            this.state.user.email = user.email
+            this.state.user.photoURL = user.photoURL
+            this.state.user.token = token
+            this.state.user.instructor = payload.instructor
+
+            console.log('authenticated')
+          }
+        })
+    },
+    createClassFirebase({ commit }, newClass) {
+      firebase
+        .database()
+        .ref('courses')
+        .push(newClass)
+        .then(data => {
+          console.log(data)
+          commit('createClass', newClass)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    loadClasses({ commit }, instructor) {
+      firebase
+        .database()
+        .ref('courses')
+        .on('value', data => {
+          const courses = []
+          const obj = data.val()
+          for (let key in obj) {
+            let currentAttendance = []
+
+            if (obj[key].attendance !== undefined) {
+              currentAttendance = obj[key].attendance
+            }
+            courses.push({
+              id: key,
+              courseName: obj[key].courseName,
+              section: obj[key].section,
+              code: obj[key].code,
+              instructor: {
+                name: obj[key].instructor.name,
+                email: obj[key].instructor.email
+              },
+              location: obj[key].location,
+              startTime: obj[key].startTime,
+              endTime: obj[key].endTime,
+              date: obj[key].date,
+              attendance: currentAttendance,
+              notes: obj[key].notes
+            })
+          }
+
+          commit('setLoadedCourses', courses)
         })
     }
   },

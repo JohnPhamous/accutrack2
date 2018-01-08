@@ -42,6 +42,7 @@ export default {
         },
         checkIn() {
             console.log('dispatch class checkin')
+            this.$store.dispatch('studentCheckIn', this.classCode)
             this.$router.push('/success')
         }
     },

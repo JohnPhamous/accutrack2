@@ -15,7 +15,8 @@ export const store = new Vuex.Store({
     },
     accessCode: 'SIRocks',
     registrationCode: '',
-    courses: []
+    courses: [],
+    loading: false
   },
   getters: {
     getUser(state) {
@@ -26,12 +27,14 @@ export const store = new Vuex.Store({
     createClass(state, newClass) {
       state.courses.push(newClass)
     },
-    setUser({ commit }, payload) {
+    setUser(state, result) {
       console.log('set user')
     },
     setLoadedCourses(state, courses) {
-      console.log(courses)
       state.courses = courses
+    },
+    setLoading(state, val) {
+      state.loading = val
     }
   },
   actions: {
@@ -44,6 +47,26 @@ export const store = new Vuex.Store({
       let provider = new firebase.auth.GoogleAuthProvider()
       this.state.user.instructor = true
       firebase.auth().signInWithRedirect(provider)
+    },
+    autoSignIn({ commit }, payload) {
+      console.log(payload)
+      this.state.user.name = payload.displayName
+      this.state.user.email = payload.email
+      this.state.user.instructor = true
+    },
+    signOut({ commit }) {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.state.user = {
+            name: '',
+            email: '',
+            photoURL: '',
+            instructor: undefined,
+            token: ''
+          }
+        })
     },
     getAuth({ commit }, payload) {
       firebase
@@ -59,8 +82,6 @@ export const store = new Vuex.Store({
             this.state.user.photoURL = user.photoURL
             this.state.user.token = token
             this.state.user.instructor = payload.instructor
-
-            console.log('authenticated')
           }
         })
     },
@@ -110,6 +131,13 @@ export const store = new Vuex.Store({
 
           commit('setLoadedCourses', courses)
         })
+    },
+    studentCheckIn({ commit }, classCode) {
+      console.log('Checking in student with code: ', classCode)
+
+      // write to firebase
+
+      console.log('student obj: ', newStudent)
     }
   },
   modules: {}

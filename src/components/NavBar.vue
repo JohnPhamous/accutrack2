@@ -26,9 +26,7 @@
         >
           <a class="nav-link">Instructor Sign In</a>
         </router-link>
-        <li class="nav-item">
-          <a class="nav-link" href="https://github.com/JohnPhamous/accutrack2" target="_blank"><i class="fa fa-github"></i></a>
-        </li>
+        <li class="nav-item" @click="signOut" v-if="showSignIn"><a class="nav-link">Sign Out</a></li>
       </ul>
     </div>
   </nav>
@@ -43,6 +41,12 @@ export default {
         isInstructor() {
             return this.$store.state.user.instructor
         }
+    },
+    methods: {
+        signOut() {
+            this.$store.dispatch('signOut')
+            this.$router.push('/')
+        }
     }
 }
 </script>
@@ -52,5 +56,8 @@ export default {
     .navbar {
         display: none;
     }
+}
+.nav-link {
+    cursor: pointer;
 }
 </style>

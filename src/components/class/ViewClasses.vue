@@ -61,6 +61,10 @@ export default {
     computed: {
         classes() {
             return this.$store.state.courses
+                .filter(c => {
+                    return c.instructor.email == this.$store.state.user.email
+                })
+                .reverse()
         }
     },
     beforeCreate() {

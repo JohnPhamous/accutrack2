@@ -34,7 +34,7 @@
                     <li><strong>Location:</strong> {{ course.location }}</li>
                     <li><strong>Time:</strong> {{ course.startTime }} - {{ course.endTime }}</li>
                     <li><strong>Date:</strong> {{ course.date }}</li>
-                    <li><strong>Number of Students:</strong> {{ Object.keys(course.attendance).length - 2 }}</li>
+                    <li><strong>Number of Students:</strong> {{ Object.keys(course.attendance).length - 1 }}</li>
                     <li><strong>Course Code:</strong> <span class="badge badge-pill badge-primary">{{ course.code }}</span></li>
                     <li><strong>Notes:</strong> {{ course.notes }}</li>
                   </ul>
@@ -51,14 +51,14 @@
                   </button>
                   <p><small>This will download the attendance sheet in a .csv file. The file can be imported in Excel/Spreadsheets.</small></p>
                   
-                  <button class="btn btn-pill btn-danger" @click.prevent="deleteCourse" :disabled="downloadDisabled">
+                  <!-- <button class="btn btn-pill btn-danger" @click.prevent="deleteCourse" :disabled="downloadDisabled">
                     <i class="fa fa-trash mr-1"></i>
                     Delete Course
                   </button>
 
                   <div class="alert alert-danger mt-3" role="alert" v-if="downloadDisabled">
                     You cannot delete a course after the course has taken place. Contact your manager if you need further assistance.
-                  </div>
+                  </div> -->
                   
                 </span>
               </arc-data>
@@ -116,10 +116,13 @@ export default {
                 .course.courseName},${this.course.section},${this.course
                 .date},\n`
 
-            this.course.attendance.forEach(row => {
-                for (let item in row) {
-                    csv += `${row[item]},`
-                }
+            Object.keys(this.course.attendance).forEach(key => {
+                console.log(this.course.attendance[key].name)
+                console.log(this.course.attendance[key].email)
+
+                csv += this.course.attendance[key].name
+                csv += ','
+                csv += this.course.attendance[key].email
                 csv += ',,,,,,\n'
             })
 
@@ -141,10 +144,10 @@ export default {
             download.click()
         },
         deleteCourse() {
-            if (this.course.attendance.length > 0) {
-                this.downloadDisabled = true
-                return
-            }
+            // if (this.course.attendance.length > 0) {
+            //     this.downloadDisabled = true
+            //     return
+            // }
             console.log('Delete course')
         },
         goBack() {

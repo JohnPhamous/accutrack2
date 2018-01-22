@@ -176,121 +176,123 @@ import Card from '../Card'
 import Confirm from './CreateClassConfirm'
 
 export default {
-    components: {
-        arcCard: Card,
-        confirmClass: Confirm
-    },
-    computed: {
-        user() {
-            return this.$store.getters.getUser
-        }
-    },
-    methods: {
-        confirmInformation() {
-            this.confirmingClass = true
-        },
-        cancelCreate() {
-            let cancel = confirm('Are you sure you want to cancel?')
-            if (cancel) {
-                this.$router.push('/classes')
-            }
-        },
-        createClass() {
-            let newDate = ''
-            newDate += this.date.substr(5, 2) + '/'
-            newDate += this.date.substr(8, 2) + '/'
-            newDate += this.date.substr(0, 4)
-
-            let newID = this.createHashID()
-
-            let newCode = this.createCode()
-
-            const newClass = {
-                courseName: this.courseName,
-                id: newID,
-                section: this.section,
-                code: newCode,
-                instructor: {
-                    name: this.user.name,
-                    email: this.user.email
-                },
-                location: this.location,
-                startTime: this.startTime,
-                endTime: this.endTime,
-                date: newDate,
-                attendance: [{ name: '', email: '' }],
-                notes: this.notes
-            }
-
-            this.$store.dispatch('createClassFirebase', newClass)
-
-            alert('Class has been created')
-            this.$router.push('/classes')
-        },
-        createHashID() {
-            let key =
-                this.courseName +
-                this.section +
-                this.user.name +
-                this.user.email +
-                this.location
-
-            let hash = 0
-            for (let i = 0; i < key.length; i++) {
-                hash += key.charCodeAt(i)
-            }
-            return hash
-        },
-        createCode() {
-            // Creates a 6 digit number
-
-            let code =
-                this.courseName +
-                this.section +
-                this.user.name +
-                this.user.email +
-                this.location +
-                this.notes
-
-            let numericalCode = 0
-
-            for (let i = 0; i < code.length; i++) {
-                numericalCode += code.charCodeAt(i)
-            }
-
-            while (numericalCode < 100000) {
-                numericalCode *= 2
-            }
-
-            return numericalCode % 1000000
-        }
-    },
-    data: function() {
-        return {
-            // instructorName: 'John Pham',
-            // instructorEmail: 'jpham035@ucr.edu',
-            courseName: '',
-            section: '',
-            location: '',
-            date: '',
-            startTime: '',
-            endTime: '',
-            notes: '',
-            confirmingClass: false
-        }
+  components: {
+    arcCard: Card,
+    confirmClass: Confirm
+  },
+  computed: {
+    user() {
+      return this.$store.getters.getUser
     }
+  },
+  methods: {
+    confirmInformation() {
+      this.confirmingClass = true
+    },
+    cancelCreate() {
+      let cancel = confirm('Are you sure you want to cancel?')
+      if (cancel) {
+        this.$router.push('/classes')
+      }
+    },
+    createClass() {
+      let newDate = ''
+      newDate += this.date.substr(5, 2) + '/'
+      newDate += this.date.substr(8, 2) + '/'
+      newDate += this.date.substr(0, 4)
+
+      let newID = this.createHashID()
+
+      let newCode = this.createCode()
+
+      const newClass = {
+        courseName: this.courseName,
+        id: newID,
+        section: this.section,
+        code: newCode,
+        instructor: {
+          name: this.user.name,
+          email: this.user.email
+        },
+        location: this.location,
+        startTime: this.startTime,
+        endTime: this.endTime,
+        date: newDate,
+        attendance: [{ name: '', email: '' }],
+        notes: this.notes
+      }
+
+      this.$store.dispatch('createClassFirebase', newClass)
+
+      alert('Class has been created')
+      this.$router.push('/classes')
+    },
+    createHashID() {
+      let key =
+        this.courseName +
+        this.section +
+        this.user.name +
+        this.user.email +
+        this.location +
+        Date()
+
+      let hash = 0
+      for (let i = 0; i < key.length; i++) {
+        hash += key.charCodeAt(i)
+      }
+      return hash
+    },
+    createCode() {
+      // Creates a 6 digit number
+
+      let code =
+        this.courseName +
+        this.section +
+        this.user.name +
+        this.user.email +
+        this.location +
+        this.notes +
+        Date()
+
+      let numericalCode = 0
+
+      for (let i = 0; i < code.length; i++) {
+        numericalCode += code.charCodeAt(i)
+      }
+
+      while (numericalCode < 100000) {
+        numericalCode *= 2
+      }
+
+      return numericalCode % 1000000
+    }
+  },
+  data: function() {
+    return {
+      // instructorName: 'John Pham',
+      // instructorEmail: 'jpham035@ucr.edu',
+      courseName: '',
+      section: '',
+      location: '',
+      date: '',
+      startTime: '',
+      endTime: '',
+      notes: '',
+      confirmingClass: false
+    }
+  }
 }
 </script>
 
 <style scoped>
 .back {
-    cursor: pointer;
+  cursor: pointer;
 }
 .actions-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .btn-confirm {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 </style>

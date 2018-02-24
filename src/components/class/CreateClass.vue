@@ -18,7 +18,7 @@
                   <div class="col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="name">Instructor's Name</label>
-                      <input 
+                      <input
                         type="text"
                         class="form-control"
                         placeholder="Instructor's Name"
@@ -234,7 +234,10 @@ export default {
         this.user.name +
         this.user.email +
         this.location +
-        Date()
+        Date() +
+        Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
 
       let hash = 0
       for (let i = 0; i < key.length; i++) {
@@ -252,7 +255,10 @@ export default {
         this.user.email +
         this.location +
         this.notes +
-        Date()
+        Date() +
+        Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
 
       let numericalCode = 0
 

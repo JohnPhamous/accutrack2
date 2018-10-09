@@ -14,6 +14,9 @@
         <div class="row">
           <div class="col-md-6 mx-auto">
             <div class="container">
+              <h4>
+                <span class="checkin-number">{{ Object.keys(course.attendance).length - 1 }}</span> Check Ins
+              </h4>
               <h1>{{ course.code }}</h1>
               <button @click="toggleCodeView()" class="btn btn-pill">Close</button>
             </div>
@@ -85,12 +88,14 @@
                   <tr>
                     <th>Student Name</th>
                     <th>Email</th>
+                    <th>Time</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="student in course.attendance" :key="student.email" v-if="student.name.length > 0">
                     <td>{{ student.name }}</td>
                     <td>{{ student.email }}</td>
+                    <td>{{ student.time }}</td>
                   </tr>
                 </tbody>
             </table>
@@ -125,19 +130,18 @@ export default {
   },
   methods: {
     downloadAttendance() {
-      let csv = `data:text/csv;charset=utf-8,name,email,,instructor,instructor email,course,section,date,\n,,,${
+      let csv = `data:text/csv;charset=utf-8,name,email,checkin_time,,instructor,instructor email,course,section,date,\n,,,${
         this.course.instructor.name
       },${this.course.instructor.email},${this.course.courseName},${
         this.course.section
       },${this.course.date},\n`;
 
       Object.keys(this.course.attendance).forEach(key => {
-        // console.log(this.course.attendance[key].name)
-        // console.log(this.course.attendance[key].email)
-
         csv += this.course.attendance[key].name;
         csv += ",";
         csv += this.course.attendance[key].email;
+        csv += ",";
+        csv += this.course.attendance[key].time;
         csv += ",,,,,,\n";
       });
 

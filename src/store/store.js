@@ -136,7 +136,8 @@ export const store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         let newStudent = {
           name: store.state.user.name,
-          email: store.state.user.email
+          email: store.state.user.email,
+          time: Date()
         };
 
         let courseRef = "";

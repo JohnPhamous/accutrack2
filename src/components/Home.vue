@@ -28,68 +28,65 @@
 </template>
 
 <script>
-import Card from './Card'
+import Card from "./Card";
 
 export default {
-    data: function() {
-        return {
-            classCode: ''
+  data: function() {
+    return {
+      classCode: ""
+    };
+  },
+  methods: {
+    signIn() {
+      this.$store.dispatch("userSignIn");
+    },
+    checkIn() {
+      this.$store.dispatch("studentCheckIn", this.classCode).then(response => {
+        if (response) {
+          this.$router.push("/success");
+        } else {
+          this.$router.push("/error");
         }
-    },
-    methods: {
-        signIn() {
-            this.$store.dispatch('userSignIn')
-        },
-        checkIn() {
-            this.$store
-                .dispatch('studentCheckIn', this.classCode)
-                .then(response => {
-                    console.log(response)
-                    if (response) {
-                        this.$router.push('/success')
-                    } else {
-                        this.$router.push('/error')
-                    }
-                })
-        }
-    },
-    computed: {
-        user() {
-            return this.$store.getters.getUser
-        },
-        userEmail() {
-            return this.$store.state.user.email
-        },
-        isSignedIn() {
-            return this.$store.state.user.email.includes('@ucr.edu')
-        }
-    },
-    watch: {
-        userEmail(value) {
-            if (value.includes('@ucr.edu')) {
-                // this.isSignedIn = true
-            } else {
-                alert('Please use your @ucr.edu email when signing in')
-                this.$router.push('/')
-            }
-        }
-    },
-    beforeCreate() {
-        this.$store.dispatch('getAuth', { instructor: false })
-        this.$store.dispatch('loadClasses')
-    },
-    components: {
-        arcCard: Card
+      });
     }
-}
+  },
+  computed: {
+    user() {
+      return this.$store.getters.getUser;
+    },
+    userEmail() {
+      return this.$store.state.user.email;
+    },
+    isSignedIn() {
+      return this.$store.state.user.email.includes("@ucr.edu");
+    }
+  },
+  watch: {
+    userEmail(value) {
+      if (value.includes("@ucr.edu")) {
+        // this.isSignedIn = true
+      } else {
+        alert("Please use your @ucr.edu email when signing in");
+        this.$router.push("/");
+      }
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch("getAuth", { instructor: false });
+    this.$store.dispatch("loadClasses");
+  },
+  components: {
+    arcCard: Card
+  }
+};
 </script>
 
 <style scoped>
 .input-lg {
-    height: 80px;
-    font-size: 50px;
-    line-height: 50px;
-    text-align: center;
-    width: 80%;
+  height: 80px;
+  font-size: 50px;
+  line-height: 50px;
+  text-align: center;
+  width: 80%;
 }
 </style>

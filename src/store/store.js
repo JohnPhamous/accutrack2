@@ -27,9 +27,7 @@ export const store = new Vuex.Store({
     createClass(state, newClass) {
       state.courses.push(newClass);
     },
-    setUser(state, result) {
-      // console.log('set user')
-    },
+    setUser(state, result) {},
     setLoadedCourses(state, courses) {
       state.courses = courses;
     },
@@ -49,7 +47,6 @@ export const store = new Vuex.Store({
       firebase.auth().signInWithRedirect(provider);
     },
     autoSignIn({ commit }, payload) {
-      // console.log(payload);
       this.state.user.name = payload.displayName;
       this.state.user.email = payload.email;
       this.state.user.instructor = true;
@@ -91,12 +88,9 @@ export const store = new Vuex.Store({
         .ref("courses")
         .push(newClass)
         .then(data => {
-          // console.log(data);
           commit("createClass", newClass);
         })
-        .catch(error => {
-          // console.log(error);
-        });
+        .catch(error => {});
     },
     loadClasses({ commit }, instructor) {
       firebase
@@ -149,7 +143,24 @@ export const store = new Vuex.Store({
           }
         });
 
-        if (courseRef.length > 5) {
+        // check if check in time is within bounds
+        const now = new Date();
+        const datetime = `${now.getMonth() +
+          1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${
+          now.getMinutes() > 9 ? now.getMinutes() : `0${now.getMinutes()}`
+        }`;
+
+        const curCourse = store.state.courses.find(course => {
+          return course.code == classCode;
+        });
+
+        const minTime = Date.parse(`${curCourse.date} ${curCourse.startTime}`);
+        const maxTime = Date.parse(`${curCourse.date} ${curCourse.endTime}`);
+        const datetimeTranslated = Date.parse(datetime);
+        const validCheckinTime =
+          datetimeTranslated >= minTime && datetimeTranslated <= maxTime;
+
+        if (courseRef.length > 5 && validCheckinTime) {
           firebase
             .database()
             .ref(`courses/${courseRef}/attendance`)

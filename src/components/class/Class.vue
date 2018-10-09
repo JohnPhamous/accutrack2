@@ -165,13 +165,11 @@ export default {
       //     this.downloadDisabled = true
       //     return
       // }
-      // console.log('Delete course')
     },
     goBack() {
       this.$router.push("/classes");
     },
     toggleCodeView() {
-      console.log("display code");
       this.displayingCode = !this.displayingCode;
     }
   }

@@ -36,9 +36,7 @@ export default {
       .then(response => {
         this.gifSrc = response.data.data.image_url;
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   }
 };
 </script>

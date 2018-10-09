@@ -15,45 +15,45 @@
 </template>
 
 <script>
-import Card from '../Card'
-import axios from 'axios'
-import { giphy } from '../../../secrets/giphy.js'
+import Card from "../Card";
+import axios from "axios";
+// import { giphy } from '../../../secrets/giphy.js'
 
 export default {
-    components: {
-        arcCard: Card
-    },
-    data: function() {
-        return {
-            gifSrc: ''
-        }
-    },
-    created() {
-        axios
-            .get(
-                `https://api.giphy.com/v1/gifs/random?api_key=${giphy}&tag=dog`
-            )
-            .then(response => {
-                this.gifSrc = response.data.data.image_url
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-}
+  components: {
+    arcCard: Card
+  },
+  data: function() {
+    return {
+      gifSrc: ""
+    };
+  },
+  created() {
+    axios
+      .get(
+        `https://api.giphy.com/v1/gifs/random?api_key=GjxOcnAtGNLQ2xjDDQDA71Ia0DD9IcYS&tag=dog`
+      )
+      .then(response => {
+        this.gifSrc = response.data.data.image_url;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+};
 </script>
 
 <style scoped>
 .gif-container {
-    width: 40vh;
-    height: 40vh;
-    overflow: hidden;
-    background-color: #e5e5e5;
-    margin: auto;
-    display: block;
+  width: 40vh;
+  height: 40vh;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  margin: auto;
+  display: block;
 }
 .gif {
-    width: 105%;
-    height: 105%;
+  width: 105%;
+  height: 105%;
 }
 </style>

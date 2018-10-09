@@ -42,54 +42,54 @@
 </template>
 
 <script>
-import Card from '../Card'
+import Card from "../Card";
 
 export default {
-    data: function() {
-        return {
-            headers: [
-                'Course Name',
-                'Instructor',
-                'Location',
-                'Date',
-                'Time',
-                'Sign Ins',
-                'Course Code'
-            ]
-        }
-    },
-    computed: {
-        classes() {
-            return this.$store.state.courses
-                .filter(c => {
-                    return c.instructor.email == this.$store.state.user.email
-                })
-                .reverse()
-        }
-    },
-    beforeCreate() {
-        this.$store.dispatch('loadClasses')
-    },
-    components: {
-        arcCard: Card
-    },
-    methods: {}
-}
+  data: function() {
+    return {
+      headers: [
+        "Course Name",
+        "Instructor",
+        "Location",
+        "Date",
+        "Time",
+        "Sign Ins",
+        "Course Code"
+      ]
+    };
+  },
+  computed: {
+    classes() {
+      return this.$store.state.courses
+        .filter(c => {
+          return c.instructor.email == this.$store.state.user.email;
+        })
+        .reverse();
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch("loadClasses");
+  },
+  components: {
+    arcCard: Card
+  },
+  methods: {}
+};
 </script>
 
 <style scoped>
 .course-item {
-    cursor: pointer;
+  cursor: pointer;
 }
 .card-block {
-    height: 70vh;
-    overflow: auto;
+  height: 70vh;
+  overflow: auto;
 }
 mark {
-    background-color: #93ebff;
+  background-color: #93ebff;
 }
 .loading {
-    position: relative;
-    margin-top: 30vh;
+  position: relative;
+  margin-top: 30vh;
 }
 </style>

@@ -9,6 +9,19 @@
       <h1>{{ course.courseName }} | Section {{ course.section }}</h1>
     </div>
 
+    <div v-show="displayingCode" class="card-block px-2 popup">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <div class="container">
+              <h1>{{ course.code }}</h1>
+              <button @click="toggleCodeView()" class="btn btn-pill">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="card-block px-2">
       <div class="container-fluid">
         <div class="row">
@@ -35,7 +48,7 @@
                     <li><strong>Time:</strong> {{ course.startTime }} - {{ course.endTime }}</li>
                     <li><strong>Date:</strong> {{ course.date }}</li>
                     <li><strong>Number of Students:</strong> {{ Object.keys(course.attendance).length - 1 }}</li>
-                    <li><strong>Course Code:</strong> <span class="badge badge-pill badge-primary">{{ course.code }}</span></li>
+                    <li @click="toggleCodeView()" class="clickable"><strong>Course Code:</strong> <span class="badge badge-pill badge-primary">{{ course.code }}</span></li>
                     <li><strong>Notes:</strong> {{ course.notes }}</li>
                   </ul>
                 </span>
@@ -89,87 +102,114 @@
 </template>
 
 <script>
-import Card from '../Card'
-import IconText from '../IconText'
+import Card from "../Card";
+import IconText from "../IconText";
 
 export default {
-    components: {
-        arcCard: Card,
-        arcData: IconText
-    },
-    computed: {
-        course() {
-            return this.$store.state.courses.find(i => {
-                return i.id == this.$route.params.id
-            })
-        }
-    },
-    data: function() {
-        return {
-            downloadDisabled: false
-        }
-    },
-    methods: {
-        downloadAttendance() {
-            let csv = `data:text/csv;charset=utf-8,name,email,,instructor,instructor email,course,section,date,\n,,,${this
-                .course.instructor.name},${this.course.instructor.email},${this
-                .course.courseName},${this.course.section},${this.course
-                .date},\n`
-
-            Object.keys(this.course.attendance).forEach(key => {
-                console.log(this.course.attendance[key].name)
-                console.log(this.course.attendance[key].email)
-
-                csv += this.course.attendance[key].name
-                csv += ','
-                csv += this.course.attendance[key].email
-                csv += ',,,,,,\n'
-            })
-
-            let csvExport = encodeURI(csv)
-
-            let download = document.createElement('a')
-            let instructorName = this.course.instructor.name
-                .split(' ')
-                .join('_')
-            let date = this.course.date.split('/').join('-')
-
-            let downloadName = `${instructorName}_${this.course
-                .courseName}_section${this.course
-                .section}_${date}_attendance.csv`.toLowerCase()
-
-            download.setAttribute('href', csvExport)
-            download.setAttribute('download', downloadName)
-            document.body.appendChild(download)
-            download.click()
-        },
-        deleteCourse() {
-            // if (this.course.attendance.length > 0) {
-            //     this.downloadDisabled = true
-            //     return
-            // }
-            console.log('Delete course')
-        },
-        goBack() {
-            this.$router.push('/classes')
-        }
+  components: {
+    arcCard: Card,
+    arcData: IconText
+  },
+  computed: {
+    course() {
+      return this.$store.state.courses.find(i => {
+        return i.id == this.$route.params.id;
+      });
     }
-}
+  },
+  data: function() {
+    return {
+      downloadDisabled: false,
+      displayingCode: false
+    };
+  },
+  methods: {
+    downloadAttendance() {
+      let csv = `data:text/csv;charset=utf-8,name,email,,instructor,instructor email,course,section,date,\n,,,${
+        this.course.instructor.name
+      },${this.course.instructor.email},${this.course.courseName},${
+        this.course.section
+      },${this.course.date},\n`;
+
+      Object.keys(this.course.attendance).forEach(key => {
+        // console.log(this.course.attendance[key].name)
+        // console.log(this.course.attendance[key].email)
+
+        csv += this.course.attendance[key].name;
+        csv += ",";
+        csv += this.course.attendance[key].email;
+        csv += ",,,,,,\n";
+      });
+
+      let csvExport = encodeURI(csv);
+
+      let download = document.createElement("a");
+      let instructorName = this.course.instructor.name.split(" ").join("_");
+      let date = this.course.date.split("/").join("-");
+
+      let downloadName = `${instructorName}_${this.course.courseName}_section${
+        this.course.section
+      }_${date}_attendance.csv`.toLowerCase();
+
+      download.setAttribute("href", csvExport);
+      download.setAttribute("download", downloadName);
+      document.body.appendChild(download);
+      download.click();
+    },
+    deleteCourse() {
+      // if (this.course.attendance.length > 0) {
+      //     this.downloadDisabled = true
+      //     return
+      // }
+      // console.log('Delete course')
+    },
+    goBack() {
+      this.$router.push("/classes");
+    },
+    toggleCodeView() {
+      console.log("display code");
+      this.displayingCode = !this.displayingCode;
+    }
+  }
+};
 </script>
 
 <style scoped>
 .attendance-list {
-    overflow: auto;
-    height: 70vh;
+  overflow: auto;
+  height: 70vh;
 }
 .row,
 .container-fluid {
-    height: 100%;
+  height: 100%;
 }
 .back {
-    cursor: pointer;
+  cursor: pointer;
 }
 mark {
-    background-color: #93ebff;
+  background-color: #93ebff;
+}
+.popup {
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  background: #007bff;
+  color: white;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.popup h1 {
+  font-size: 15em;
+}
+
+.popup .container-fluid {
+  height: initial;
+}
+
+.clickable {
+  cursor: pointer;
 }
 </style>

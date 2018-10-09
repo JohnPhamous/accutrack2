@@ -1,58 +1,58 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import * as firebase from 'firebase'
+import Vue from "vue";
+import Vuex from "vuex";
+import * as firebase from "firebase";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
     user: {
-      name: '',
-      email: '',
-      photoURL: '',
+      name: "",
+      email: "",
+      photoURL: "",
       instructor: undefined,
-      token: ''
+      token: ""
     },
-    accessCode: 'SIRocks',
-    registrationCode: '',
+    accessCode: "SIRocks",
+    registrationCode: "",
     courses: [],
     loading: false
   },
   getters: {
     getUser(state) {
-      return state.user
+      return state.user;
     }
   },
   mutations: {
     createClass(state, newClass) {
-      state.courses.push(newClass)
+      state.courses.push(newClass);
     },
     setUser(state, result) {
-      console.log('set user')
+      // console.log('set user')
     },
     setLoadedCourses(state, courses) {
-      state.courses = courses
+      state.courses = courses;
     },
     setLoading(state, val) {
-      state.loading = val
+      state.loading = val;
     }
   },
   actions: {
     userSignIn({ commit }) {
-      let provider = new firebase.auth.GoogleAuthProvider()
-      this.state.user.instructor = false
-      firebase.auth().signInWithRedirect(provider)
+      let provider = new firebase.auth.GoogleAuthProvider();
+      this.state.user.instructor = false;
+      firebase.auth().signInWithRedirect(provider);
     },
     instructorSignIn({ commit }) {
-      let provider = new firebase.auth.GoogleAuthProvider()
-      this.state.user.instructor = true
-      firebase.auth().signInWithRedirect(provider)
+      let provider = new firebase.auth.GoogleAuthProvider();
+      this.state.user.instructor = true;
+      firebase.auth().signInWithRedirect(provider);
     },
     autoSignIn({ commit }, payload) {
-      console.log(payload)
-      this.state.user.name = payload.displayName
-      this.state.user.email = payload.email
-      this.state.user.instructor = true
+      // console.log(payload);
+      this.state.user.name = payload.displayName;
+      this.state.user.email = payload.email;
+      this.state.user.instructor = true;
     },
     signOut({ commit }) {
       firebase
@@ -60,13 +60,13 @@ export const store = new Vuex.Store({
         .signOut()
         .then(() => {
           this.state.user = {
-            name: '',
-            email: '',
-            photoURL: '',
+            name: "",
+            email: "",
+            photoURL: "",
             instructor: undefined,
-            token: ''
-          }
-        })
+            token: ""
+          };
+        });
     },
     getAuth({ commit }, payload) {
       firebase
@@ -74,42 +74,42 @@ export const store = new Vuex.Store({
         .getRedirectResult()
         .then(result => {
           if (result.credential) {
-            const token = result.credential.accessToken
-            const user = result.user
+            const token = result.credential.accessToken;
+            const user = result.user;
 
-            this.state.user.name = user.displayName
-            this.state.user.email = user.email
-            this.state.user.photoURL = user.photoURL
-            this.state.user.token = token
-            this.state.user.instructor = payload.instructor
+            this.state.user.name = user.displayName;
+            this.state.user.email = user.email;
+            this.state.user.photoURL = user.photoURL;
+            this.state.user.token = token;
+            this.state.user.instructor = payload.instructor;
           }
-        })
+        });
     },
     createClassFirebase({ commit }, newClass) {
       firebase
         .database()
-        .ref('courses')
+        .ref("courses")
         .push(newClass)
         .then(data => {
-          console.log(data)
-          commit('createClass', newClass)
+          // console.log(data);
+          commit("createClass", newClass);
         })
         .catch(error => {
-          console.log(error)
-        })
+          // console.log(error);
+        });
     },
     loadClasses({ commit }, instructor) {
       firebase
         .database()
-        .ref('courses')
-        .on('value', data => {
-          const courses = []
-          const obj = data.val()
+        .ref("courses")
+        .on("value", data => {
+          const courses = [];
+          const obj = data.val();
           for (let key in obj) {
-            let currentAttendance = []
+            let currentAttendance = [];
 
             if (obj[key].attendance !== undefined) {
-              currentAttendance = obj[key].attendance
+              currentAttendance = obj[key].attendance;
             }
             courses.push({
               id: key,
@@ -126,40 +126,40 @@ export const store = new Vuex.Store({
               date: obj[key].date,
               attendance: currentAttendance,
               notes: obj[key].notes
-            })
+            });
           }
 
-          commit('setLoadedCourses', courses)
-        })
+          commit("setLoadedCourses", courses);
+        });
     },
     studentCheckIn({ commit }, classCode) {
       return new Promise((resolve, reject) => {
         let newStudent = {
           name: store.state.user.name,
           email: store.state.user.email
-        }
+        };
 
-        let courseRef = ''
+        let courseRef = "";
 
         store.state.courses.some(el => {
           if (el.code == classCode) {
-            courseRef = el.id
-            return true
+            courseRef = el.id;
+            return true;
           }
-        })
+        });
 
         if (courseRef.length > 5) {
           firebase
             .database()
             .ref(`courses/${courseRef}/attendance`)
-            .push(newStudent)
+            .push(newStudent);
 
-          resolve(true)
+          resolve(true);
         } else {
-          resolve(false)
+          resolve(false);
         }
-      })
+      });
     }
   },
   modules: {}
-})
+});
